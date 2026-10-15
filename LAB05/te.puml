@@ -1,0 +1,62 @@
+
+@startuml
+top to bottom direction
+
+skinparam linetype ortho
+skinparam shadowing false
+skinparam nodesep 55
+skinparam ranksep 50
+skinparam defaultFontName Arial
+
+skinparam usecase {
+    BackgroundColor White
+    BorderColor Black
+}
+
+actor "Khách theo đoàn" as KTD
+actor "Khách lẻ" as KL
+actor "Công ty du lịch" as CT
+
+rectangle "HỆ THỐNG QUẢN LÝ TOUR DU LỊCH" {
+
+    usecase "Đăng ký tour\ntổng quát" as UCDK
+
+    usecase "UC02\nĐăng ký tour theo đoàn" as UC02
+    usecase "UC06\nĐăng ký tour theo chuyến" as UC06
+
+    usecase "UC03\nCung cấp danh sách\nngười mua bảo hiểm" as UC03
+    usecase "UC04\nĐặt cọc tour" as UC04
+    usecase "UC09\nLưu trữ thông tin\nkhách theo đoàn" as UC09
+
+    usecase "UC07\nMua và thanh toán vé" as UC07
+
+    ' Hỗ trợ sắp xếp vị trí
+    UCDK -[hidden]down- UC02
+    UC02 -[hidden]right- UC06
+    UC02 -[hidden]down- UC03
+    UC02 -[hidden]right- UC04
+    UC04 -[hidden]down- UC09
+    UC06 -[hidden]down- UC07
+}
+
+' Tác nhân kết nối với chức năng tương ứng
+KTD -right- UC02
+KTD -right- UC03
+
+KL -right- UC06
+
+UC09 -right- CT
+
+' UC02 và UC06 là hai hình thức đăng ký tour
+UC02 -up-|> UCDK
+UC06 -up-|> UCDK
+
+' Quan hệ bắt buộc và tùy chọn
+UC02 ..> UC04 : <<include>>
+UC02 ..> UC09 : <<include>>
+
+UC03 ..> UC02 : <<extend>>\n[nếu đoàn mua bảo hiểm]
+
+UC06 ..> UC07 : <<include>>
+
+@enduml

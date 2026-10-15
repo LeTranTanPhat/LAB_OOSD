@@ -1,0 +1,84 @@
+
+@startuml
+left to right direction
+
+skinparam linetype ortho
+skinparam shadowing false
+skinparam nodesep 35
+skinparam ranksep 40
+skinparam defaultFontName Arial
+
+skinparam usecase {
+    BackgroundColor White
+    BorderColor #333333
+}
+
+actor "Khách theo đoàn" as KTD
+actor "Khách lẻ" as KL
+actor "Công ty du lịch" as CT
+
+rectangle "HỆ THỐNG QUẢN LÝ TOUR DU LỊCH" {
+
+    ' Cột bên trái: Nghiệp vụ khách hàng
+    usecase "UC01\nXem thông tin tour" as UC01
+    usecase "UC03\nĐăng ký tour theo đoàn" as UC03
+    usecase "UC04\nCung cấp danh sách\nngười mua bảo hiểm" as UC04
+    usecase "UC05\nĐặt cọc tour" as UC05
+    usecase "UC06\nThanh toán kinh phí\ntham quan đoàn" as UC06
+    usecase "UC07\nĐăng ký tour theo chuyến" as UC07
+    usecase "UC08\nMua và thanh toán vé" as UC08
+
+    ' Cột bên phải: Nghiệp vụ quản lý
+    usecase "UC02\nQuản lý thông tin tour" as UC02
+    usecase "UC09\nQuản lý nơi dừng chân,\nphương tiện và ăn nghỉ" as UC09
+    usecase "UC10\nQuản lý điểm tham quan" as UC10
+    usecase "UC11\nPhân công nhân viên\nhướng dẫn du lịch" as UC11
+    usecase "UC12\nTính lương nhân viên" as UC12
+    usecase "UC13\nLưu trữ thông tin\nkhách theo đoàn" as UC13
+    usecase "UC14\nGửi phiếu khảo sát" as UC14
+    usecase "UC15\nGhi nhận góp ý\nkhách hàng" as UC15
+
+    ' Căn chỉnh các Use Case thành hai cột
+    UC01 -[hidden]right- UC02
+    UC01 -[hidden]down- UC03
+    UC03 -[hidden]down- UC04
+    UC04 -[hidden]down- UC05
+    UC05 -[hidden]down- UC06
+    UC06 -[hidden]down- UC07
+    UC07 -[hidden]down- UC08
+
+    UC02 -[hidden]down- UC09
+    UC09 -[hidden]down- UC10
+    UC10 -[hidden]down- UC11
+    UC11 -[hidden]down- UC12
+    UC12 -[hidden]down- UC13
+    UC13 -[hidden]down- UC14
+    UC14 -[hidden]down- UC15
+
+    UC08 -[hidden]right- UC15
+}
+
+' Tác nhân khách hàng ở bên trái
+KTD -right- UC01
+KTD -right- UC03
+KTD -right- UC04
+KTD -right- UC05
+KTD -right- UC06
+
+KL -right- UC01
+KL -right- UC07
+KL -right- UC08
+
+' Tác nhân công ty ở bên phải
+UC02 -right- CT
+UC09 -right- CT
+UC10 -right- CT
+UC11 -right- CT
+UC12 -right- CT
+UC13 -right- CT
+UC14 -right- CT
+UC15 -right- CT
+
+KTD -[hidden]down- KL
+
+@enduml
